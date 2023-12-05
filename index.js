@@ -29,37 +29,48 @@
 
 class Musician {
   // статичне поле count, яке відслідковує кількість музикантів, початкове значення 0
+  static count = 0;
   // Об'являємо приватні поля #name; #instrument;
+  #name = "";
+  #instrument = "";
 
   constructor(name, instrument) {
     // Конструктор приймає два параметри: name та instrument
+    this.#name = name;
+    this.#instrument = instrument;
     // присвоєння вхідного значення name до приватного поля #name
     // присвоєння вхідного значення instrument до приватного поля #instrument
+    Musician.count++;
     // збільшення значення статичного поля на 1
   }
 
   get name() {
     // гетер для приватного поля #name
+    return this.#name;
     // повертає значення приватного поля #name
   }
 
   get instrument() {
     // гетер для приватного поля #instrument
+    return this.#instrument;
     // повертає значення приватного поля #instrument
   }
 
   set name(newName) {
     // сетер для приватного поля #name
+    this.#name = newName;
     // присвоює нове значення приватному полю #name
   }
 
   set instrument(newInstrument) {
     // сетер для приватного поля #instrument
+    this.#instrument = newInstrument;
     // присвоює нове значення приватному полю #instrument
   }
 
   play() {
     // метод, що виводить рядок в консоль <#name> грає на <#instrument>
+    console.log(`${this.#name} грає на ${this.#instrument}`);
   }
 }
 
@@ -99,15 +110,34 @@ class Musician {
 
 class Guitarist extends Musician {
   // Об'являємо приватні поля #band;
+  #band = "";
   // Конструктор приймає три параметри: name, instrument та band
-  // виклик конструктора батьківського класу super з двома параметрами name, instrument
-  // присвоєння вхідного значення band до приватного поля #band
+  constructor(name, instrument, band) {
+    // виклик конструктора батьківського класу super з двома параметрами name, instrument
+    super(name, instrument);
+    // присвоєння вхідного значення band до приватного поля #band
+    this.#band = band;
+  }
   // гетер для приватного поля #band
+  get band() {
+    return this.#band;
+  }
   // повертає значення приватного поля #band
   // сетер для приватного поля #band
+  set band(newBand) {
+    this.#band = newBand;
+  }
   // присвоює нове значення приватному полю #band
   // метод joinBand, що змінює значення #band, this.#band = band
+  joinBand(newBand) {
+    this.#band = newBand;
+  }
   // перевизначений метод play(), що виводить рядок в консоль ${super.name} грає на ${super.instrument} в групі ${this.#band}
+  play() {
+    console.log(
+      `${super.name} грає на ${super.instrument} в групі ${this.#band}`
+    );
+  }
 }
 
 /*
@@ -285,7 +315,7 @@ class LeadSinger extends Vocalist {
  * | name        | "John"           |
  * | instrument  | "Guitarist"      |
  */
-
+const musician = new Musician("John", "Guitarist");
 /*
  * Створення guitarist екземпляра класу Guitarist
  * ---------------------------------------------------
@@ -295,6 +325,7 @@ class LeadSinger extends Vocalist {
  * | instrument  | "гітара"          |
  * | band        | "Led Zeppelin"    |
  */
+const guitarist = new Guitarist("Jimmy Page", "гітара", "Led Zeppelin");
 
 /*
  * Створення bassist екземпляра класу Bassist
@@ -369,8 +400,8 @@ class LeadSinger extends Vocalist {
  */
 
 // Методи для тестування розкоментувати після виконня всіх завдань
-// musician.play();
-// guitarist.play();
+musician.play();
+guitarist.play();
 // bassist.play();
 // band.playMusic();
 // performance.info();
